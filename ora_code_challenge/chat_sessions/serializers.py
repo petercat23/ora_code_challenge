@@ -22,21 +22,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return {'access': text_type(refresh.access_token)}
 
 
-class SessionsTypeSerializer(serializers.Serializer):
-
-    type = serializers.CharField(required=True)
-
-    def validate_type(self, value):
-        if value != "sessions":
-            raise serializers.ValidationError("expected `type` to equal `sessions`")
-        return value
-
-
-class DataSerializer(serializers.Serializer):
-
-    data = SessionsTypeSerializer(required=True)
-
-
 class SessionsSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
