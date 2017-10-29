@@ -1,11 +1,13 @@
 from django.utils.six import text_type
 
-from rest_framework import serializers
+# from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_json_api import serializers
+from rest_framework_json_api.relations import ResourceRelatedField
 
 from chat_sessions.models import Session
 from users.models import User
-from users.serializers import UserSerializer
+# from users.serializers import UserSerializer
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -24,8 +26,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class SessionsSerializer(serializers.ModelSerializer):
 
-    user = UserSerializer(read_only=True)
-
     class Meta:
         model = Session
-        fields = ('id', 'user', 'created', 'modified')
+        fields = '__all__'
+
+    user = ResourceRelatedField(read_only=True)

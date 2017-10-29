@@ -22,7 +22,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, TimeStampedModel):
 
-    username = models.CharField(max_length=256)
+    username = models.CharField(max_length=256, unique=True)
     is_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
@@ -34,3 +34,6 @@ class User(AbstractBaseUser, TimeStampedModel):
         if self.is_admin:
             return True
         return False
+
+    class JSONAPIMeta:
+        resource_name = "users"

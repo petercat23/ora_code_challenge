@@ -3,9 +3,10 @@ import string
 
 from django.db import transaction
 
-from rest_framework import status, views
+from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+
 
 from chat_sessions.serializers import CustomTokenObtainPairSerializer, SessionsSerializer
 from chat_sessions.models import Session
@@ -14,7 +15,7 @@ from users.models import User
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
 
-class ChatSessionCreate(views.APIView):
+class ChatSessionCreate(generics.CreateAPIView):
 
     permission_classes = (AllowAny,)
     serializer_class = SessionsSerializer

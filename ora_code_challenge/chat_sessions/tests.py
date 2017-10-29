@@ -21,7 +21,7 @@ class SessionsTest(APITestCase):
 
         # assert that a sessions object and user object were created
         self.assertTrue(Session.objects.filter(id=response.data['id']).exists())
-        self.assertTrue(User.objects.filter(id=response.data['user']['id']).exists())
+        self.assertTrue(User.objects.filter(id=int(response.data['user']['id'])).exists())
 
         # get the json web token
         full_token = response._headers['authorization'][1]
@@ -32,4 +32,6 @@ class SessionsTest(APITestCase):
         user_id = token['user_id']
 
         # assert that the user_id matches the user created in the response
-        self.assertEqual(user_id, response.data['user']['id'])
+        self.assertEqual(user_id, int(response.data['user']['id']))
+
+        # content holds parsed data
