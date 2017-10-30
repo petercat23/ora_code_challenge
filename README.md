@@ -17,6 +17,7 @@ Throughout the code base are some specific comments regarding any design choices
 
 Please let me know if you have any questions or have trouble getting the project to start, etc.
 
+Thanks so much!!!
 
 #### Running the project
 
@@ -38,4 +39,3 @@ After building the project:
 simply run:
 
 	$ docker-compose run web python manage.py test
-	
