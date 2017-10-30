@@ -27,7 +27,11 @@ SECRET_KEY = 'rb^$go2$j!go3wr$fv6=7f3q-o$%d(ff10#bxqe&2)emgn^8=-'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+SIMPLE_JWT = {
+    'ROTATE_REFRESH_TOKENS': True,
+}
 
+JWT_HEADER_TYPE = 'Bearer '
 
 # Application definition
 
@@ -43,8 +47,8 @@ INSTALLED_APPS = [
     # local apps
     'api',
     'users',
-    'chat_sessions', # namespace collision with django.contrib.sessions
-    'chat_messages'  # namespace collision with django.contrib.messages
+    'chat_sessions',  # `sessions` collides with django.contrib.sessions
+    'chat_messages'  # `messages` collides  with django.contrib.messages
 ]
 
 AUTH_USER_MODEL = 'users.User'

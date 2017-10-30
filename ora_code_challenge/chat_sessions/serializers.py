@@ -7,7 +7,7 @@ from rest_framework_json_api.relations import ResourceRelatedField
 
 from chat_sessions.models import Session
 from users.models import User
-# from users.serializers import UserSerializer
+from users.serializers import UserSerializer
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -21,13 +21,22 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         refresh = self.get_token(self.user)
 
-        return {'access': text_type(refresh.access_token)}
+        return {
+            'access': text_type(refresh.access_token),
+            'refresh': text_type(refresh)
+        }
 
 
 class SessionsSerializer(serializers.ModelSerializer):
+    included_serializers = {
+        'user': UserSerializer,
+    }
+
+    user = ResourceRelatedField(read_only=True)
 
     class Meta:
         model = Session
         fields = '__all__'
 
-    user = ResourceRelatedField(read_only=True)
+    class JSONAPIMeta:
+        included_resources = ['user']

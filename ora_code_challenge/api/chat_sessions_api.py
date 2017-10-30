@@ -2,6 +2,7 @@ import random
 import string
 
 from django.db import transaction
+from django.conf import settings
 
 from rest_framework import status, generics
 from rest_framework.response import Response
@@ -47,9 +48,15 @@ class ChatSessionCreate(generics.CreateAPIView):
         except TokenError as e:
             raise InvalidToken(e.args[0])
 
-        token = token_serializer.validated_data['access']
+        access = token_serializer.validated_data['access']
+        refresh = token_serializer.validated_data['refresh']
+
+        headers = {
+            'Authorization': settings.JWT_HEADER_TYPE + access,
+            'Refresh': settings.JWT_HEADER_TYPE + refresh
+        }
 
         return Response(session_serializer.data,
-                        headers={'Authorization': 'Bearer ' + token},
+                        headers=headers,
                         status=status.HTTP_201_CREATED,
                         content_type="application/vnd.api+json")

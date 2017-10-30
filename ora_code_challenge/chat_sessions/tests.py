@@ -1,3 +1,4 @@
+import json
 
 from django.core.urlresolvers import reverse
 
@@ -33,5 +34,3 @@ class SessionsTest(APITestCase):
 
         # assert that the user_id matches the user created in the response
         self.assertEqual(user_id, int(response.data['user']['id']))
-
-        # content holds parsed data
